@@ -1,3 +1,5 @@
+This project digs into why machine learning models fall apart when the data changes, and looks at how robustness tricks can actually make AI work better out in the real world.
+
 Evaluating Model Robustness Under Distribution Shift Using Logistic Regression
 
 Problem Statement  
