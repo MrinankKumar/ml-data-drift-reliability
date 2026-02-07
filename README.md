@@ -49,6 +49,21 @@ High Drift | ~0.89
 Extreme Drift | ~0.89  
 Real Covariate Shift | ~0.10  
 
+### Accuracy vs Drift Level
+![Accuracy vs Drift](plots/accuracy_vs_drift Graph.png)
+
+### Drift Detection Graph
+![Drift Detection](plots/Drift Detection Graph.png)
+
+### Confusion Matrix — No Drift
+![No Drift](plots/confusion_no_drift.png)
+
+### Confusion Matrix — High Drift
+![High Drift](plots/Confusion matrix at No Drift vs High Drift Graph 01.png)
+
+![High Drift](plots/Confusion matrix at No Drift vs High Drift Graph 02.png)
+
+
 The results clearly show that artificial drift has minimal impact, while real distribution shift severely affects model performance.
 
 Key Observations  
