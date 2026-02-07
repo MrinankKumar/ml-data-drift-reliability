@@ -66,6 +66,7 @@ Real Covariate Shift | ~0.10
 
 
 
+
 The results clearly show that artificial drift has minimal impact, while real distribution shift severely affects model performance.
 
 Key Observations  
