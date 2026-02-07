@@ -1,3 +1,8 @@
+## Research Paper Reproduction
+
+I also conducted a covariate shift experiment, following the methodology described in the paper “A Survey on Dataset Shift in Machine Learning.” This allowed me to verify that my experimental setup actually functions correctly.
+
+The details can be found here: paper_reproduction/covariate_shift_experiment.ipynb
 This project digs into why machine learning models fall apart when the data changes, and looks at how robustness tricks can actually make AI work better out in the real world.
 
 Evaluating Model Robustness Under Distribution Shift Using Logistic Regression
