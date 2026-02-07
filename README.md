@@ -52,16 +52,16 @@ Real Covariate Shift | ~0.10
 ## Results
 
 ### Accuracy vs Drift Level
-![Accuracy vs Drift](plots/accuracy_vs_drift.png)
+![Accuracy vs Drift](plots/Confusion matrix at No Drift vs High Drift Graph 01.png)
 
 ### Drift Detection Graph
-![Drift Detection](plots/drift_detection.png)
+![Drift Detection](plots/Confusion matrix at No Drift vs High Drift Graph 02.png)
 
 ### Confusion Matrix — No Drift
-![No Drift](plots/confusion_no_drift.png)
+![No Drift](plots/Drift Detection Graph.png)
 
 ### Confusion Matrix — High Drift
-![High Drift](plots/confusion_high_drift.png)
+![High Drift](plots/accuracy_vs_drift Graph.png)
 
 
 
