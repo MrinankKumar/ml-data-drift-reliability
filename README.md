@@ -1,4 +1,4 @@
-## Research Paper Reproduction
+  ## Research Paper Reproduction
 
 I also conducted a covariate shift experiment, following the methodology described in the paper “A Survey on Dataset Shift in Machine Learning.” This allowed me to verify that my experimental setup actually functions correctly.
 
@@ -68,11 +68,34 @@ Real Covariate Shift | ~0.10
 ### Confusion Matrix — High Drift
 ![High Drift](plots/confusion_high_drift.png.png)
 
-
-
-
-
 The results clearly show that artificial drift has minimal impact, while real distribution shift severely affects model performance.
+
+
+Experimental Study
+
+In this project, we looked at how machine learning models react when the data they see starts to change—what’s called covariate shift.
+
+What did we find?
+
+1. The more the data drifted, the worse the models got at making accurate predictions.
+2. If you check the confusion matrices, you’ll see things really fall apart when drift gets high. The model’s predictions just aren’t reliable anymore.
+3. The KS-test picks up on these distribution shifts pretty well.
+4. Setting a threshold on the KS score helps you figure out exactly when you need to retrain your model.
+
+The big takeaway? Catching drift isn’t enough. If you want your ML system to actually work out in the wild, you need to watch for drift, measure it, and step in when things go sideways. That’s how you keep your models trustworthy, even when the world keeps changing.
+
+## Automatic Drift Handling (System Response)
+
+When the system spots drift with a KS test, it jumps in and retrains the model using fresh data. That way, performance bounces back.
+
+Honestly, this is just how real-world machine learning works. If you’re running something like an IoT sensing system, you need things to stay reliable—even when everything keeps changing.
+
+
+## Comparison of Drift Detection Methods
+
+When the system spots drift with a KS test, it jumps in and retrains the model using fresh data. That way, performance bounces back.
+
+Honestly, this is just how real-world machine learning works. If you’re running something like an IoT sensing system, you need things to stay reliable—even when everything keeps changing.
 
 Key Observations  
 
