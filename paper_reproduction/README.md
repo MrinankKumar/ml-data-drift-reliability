@@ -1,4 +1,45 @@
-##Reproducing the Covariate Shift Experiment
+# Studying ML Model Reliability under Covariate Shift
+### Reproduction and Extension of:
+"A Survey on Dataset Shift in Machine Learning"
+Quinonero-Candela et al., 2009
+
+Machine learning models usually expect that the data they see during training looks the same as what they'll see when put to the test. But in real life, that just doesn’t hold up—things change, and the data shifts.
+
+In this experiment, we dig into three things:
+1. What happens to model performance when the data starts to drift
+2. How to spot that drift with statistical tests
+3. How systems can bounce back automatically by retraining
+
+Drift Simulation → Model Degradation → Drift Detection → Drift Decision → Retraining → Recovery
+
+- Logistic Regression
+- Decision Tree
+- Random Forest
+- SVM
+- KNN
+
+- KS Test
+- PSI
+- Mean Shift
+As drift increases, accuracy drops significantly for all models.
+However, tree-based models degrade slower than linear models.
+
+![Accuracy vs Drift](plots/accuracy_vs_drift.png.png)
+
+![Drift Detection](plots/drift_dectection.png.png)
+
+As drift increases, accuracy drops significantly for all models.
+However, tree-based models degrade slower than linear models.
+When drift is detected, the model is retrained on new data,
+restoring performance close to original levels.
+
+• ML models are highly sensitive to covariate shift.
+• KS and PSI effectively detect distribution change before accuracy collapses.
+• Retraining restores performance, demonstrating need for monitoring in ML systems.
+• Different models show different robustness patterns under drift.
+This study matters if you’re working with IoT sensors that move around or if you’ve got learning-to-rank systems where the kinds of queries keep shifting. It’s also important for machine learning setups running out in the real world, especially when things don’t stay the same for long. And if you care about keeping your AI or ML monitoring solid and trustworthy, this is for you, too.
+
+This project shows how to build a full machine learning reliability pipeline—one that actually helps you spot data drift, figure out what’s going on, and get things back on track when problems pop up.
 
 Here, I’m recreating the covariate shift experiment from the paper. Basically, the idea is simple: you train your model on one distribution, 
 then test it on data that comes from a different one. The result? The model just doesn’t perform as well. This setup exposes how sensitive machine learning models are when the world changes between training and testing.
