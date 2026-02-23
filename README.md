@@ -121,3 +121,46 @@ This project shows that ML models which perform well in normal evaluation settin
 
 Conclusion  
 The study proves that evaluating models only on random splits is inadequate. Robustness testing under realistic covariate shifts is essential to ensure model reliability. This experiment serves as a practical example of how data drift impacts model performance and highlights the importance of drift detection tools like Deepchecks in modern ML workflows.
+
+# ML Data Drift Reliability
+
+This repo is basically my research journal as I dig into a question that doesn’t get enough attention: what really happens to a machine learning model once it goes into the real world and the data starts to change?
+
+Most undergrad ML projects end with a nice test accuracy. That’s it — done. But real life isn’t frozen in time. Here, I’m looking at what happens when the data drifts, whether standard stats can spot trouble before things break, and what we can actually do to fix it.
+
+## Why This Problem Matters
+
+A model can look great in testing and then quietly fall apart in production as the world changes around it. This isn’t just theory — it hits stuff like fraud detection, medical diagnostics, energy forecasting, really any system where yesterday’s data isn’t the same as today’s. Figuring out how to detect, measure, and respond to drift is still an open and super practical challenge.
+
+## What’s in the Repo
+
+### elec2-drift-study
+**Model Reliability Under Real Temporal Drift — ELEC2 Electricity Dataset**
+
+This is the main experiment. Instead of faking drift by tweaking data, I’m using a real electricity pricing dataset that actually shifts over time. I trained a model on past data and tested it across five different time periods, watching how the accuracy drops and whether a KS-based drift detector can actually warn us before things go south.
+
+The big takeaway: the KS statistic tracks accuracy loss pretty well (r = 0.807), but it can’t tell if the drift is permanent or just a temporary blip. That’s a real problem for systems with cycles — you get false alarms.
+
+### paper-reproduction
+Tried to reproduce some published drift detection research. Lots of notes on what worked, what didn’t, and where the original results were tough to match.
+
+## Core Questions
+
+- How fast and how bad does accuracy drop as drift increases in real data?
+- Does the KS statistic actually warn you about accuracy loss, or does it cry wolf?
+- When does drift detection fail even when the stats look strong?
+- Can retraining fix things, and what does it cost?
+
+## Where Things Stand
+
+This is still an active undergrad project, not a polished showcase. I’m sharing results as they come — even when the detector acts weird or fails completely. The point here is to understand what’s going on, not to show off a model that magically works every time.
+
+## Tech Stack
+
+Python, scikit-learn, scipy, pandas, matplotlib. Every notebook runs on its own.
+
+## Author
+
+Mrinank — BS Data Science, IIT Madras (2nd Year)
+
+Digging into ML reliability and data drift on my own alongside classes. Always open to feedback or collaboration.
