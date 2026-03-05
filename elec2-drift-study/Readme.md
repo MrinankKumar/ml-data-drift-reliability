@@ -42,13 +42,23 @@ PSI values of 4.25 and 2.83 at Windows 2 and 3 are approximately 20 times above 
 
 ## Graphs
 
-- `accuracy_over_time.png` — Model accuracy across all 5 time windows
-- `ks_drift_over_time.png` — Mean KS statistic across time windows
-- `ks_vs_psi_comparison.png` — KS vs PSI scores over time and their correlation
-- `ks_vs_accuracy_drop.png` — Correlation between KS score and accuracy drop (r=0.807)
-- `confusion_matrices.png` — How prediction failure patterns change under drift
-- `retraining_recovery.png` — Accuracy recovery after drift-triggered retraining
-- `per_feature_drift.png` — Which features drifted most
+**Accuracy Degradation Over Time**
+![Accuracy over time](accuracy_over_time.png)
+
+**KS Drift Detection Score Over Time**
+![KS drift over time](ks_drift_over_time.png)
+
+**KS vs PSI Comparison**
+![KS vs PSI](ks_vs_psi_comparison.png)
+
+**KS Score vs Accuracy Drop**
+![KS vs accuracy drop](ks_vs_accuracy_drop.png)
+
+**Per Feature Drift Breakdown**
+![Per feature drift](per_feature_drift.png)
+
+**Confusion Matrices Before and After Drift**
+![Confusion matrices](confusion_matrices.png)
 
 ## Limitations and Next Steps
 
