@@ -1,48 +1,61 @@
-ELEC2 Drift Study — How Well Does the KS Test Really Work on Real Data?
+# ELEC2 Drift Study — KS vs PSI Detection on Real Temporal Drift
 
-What’s Going On Here
+## What This Study Is About
 
-Most drift detection studies mess with data on purpose—add some noise, shift some averages, that sort of thing. But life’s messier than that. Here, I’m looking at the ELEC2 electricity dataset: real electricity prices from New South Wales, Australia, where the data naturally drifts over time. The big question: does the Kolmogorov-Smirnov (KS) test actually warn us when model accuracy drops in the real world, or does it cry wolf?
+Most drift detection work tests on artificially perturbed data. This study uses the ELEC2 electricity dataset — a real-world benchmark with known temporal distribution shift — to ask two honest questions:
 
-About the Data
+1. Does the KS statistic reliably predict model accuracy degradation in practice?
+2. Does PSI agree with KS, and when does it not?
 
-The ELEC2 dataset tracks whether the electricity price went up or down compared to the previous day’s average. You’ve got 45,312 samples covering two years, so it’s not tiny. What’s great about it? The distribution actually changes over time—thanks to real market shifts—so we don’t have to fake anything.
+## Dataset
 
-How I Ran This
+The ELEC2 dataset records electricity pricing in New South Wales, Australia. The target is whether the price went UP or DOWN relative to the previous 24-hour average. It contains 45,312 samples collected over two years. The distribution changes naturally over time due to market conditions — no artificial perturbation needed.
 
-I split the data into five chunks, each covering a stretch of time, and trained a logistic regression model on the very first chunk. No retraining after that. The model gets tested on all five windows, just like what happens when you deploy a model in the wild and let it age.
+## Methodology
 
-For each window, I measured two things: how accurate the model was and the mean KS score (averaged across all features) compared to the original chunk. Then I checked—when the KS score goes up, does accuracy drop? And do they always move together?
+The dataset was split into five equal time windows in chronological order. A Logistic Regression model was trained exclusively on Window 0 (the earliest period) and tested on all five windows without retraining. This mirrors real deployment conditions where a model trained on historical data must serve predictions as the world changes.
 
-What Happened
+For each window, two drift detectors were computed against the reference window — the KS statistic and the Population Stability Index (PSI). Their scores, flags, and agreement were compared against actual accuracy degradation.
 
-Window | Accuracy | Mean KS Score  
-0 (Reference) | 0.820 | 0.000  
-1 | 0.805 | 0.093  
-2 | 0.665 | 0.444  
-3 | 0.645 | 0.545  
-4 | 0.820 | 0.360  
+## Key Results
 
-Pearson correlation (r) between KS score and accuracy drop: 0.807
+| Window | Accuracy | KS Score | PSI Score | KS Flag | PSI Flag | Agreement |
+|--------|----------|----------|-----------|---------|----------|-----------|
+| 0 (Reference) | 0.820 | 0.000 | 0.000 | NO DRIFT | NO DRIFT | ✓ |
+| 1 | 0.805 | 0.089 | 0.206 | NO DRIFT | DRIFT | ✗ DISAGREE |
+| 2 | 0.665 | 0.444 | 4.257 | DRIFT | DRIFT | ✓ |
+| 3 | 0.645 | 0.545 | 2.831 | DRIFT | DRIFT | ✓ |
+| 4 | 0.820 | 0.359 | 2.445 | DRIFT | DRIFT | ✓ |
 
-Most of the time, the KS statistic tracks model accuracy pretty well. As drift grows, the model struggles. But look at Window 4: the KS score is high (0.36—way past the usual warning threshold), but accuracy jumps right back to its original level. So the KS test isn’t telling the full story. It flags both long-lasting drift and short-term blips, but only the first one really hurts your model in the end.
+**KS-Accuracy correlation: r = 0.807**
 
-The Main Takeaway
+## Main Findings
 
-KS-based drift detection works well when the drift sticks around. But if the distribution just wanders off for a bit and comes back, you get a false alarm. For electricity markets (and other systems that cycle), this means you could end up retraining your model for no good reason, wasting time and compute.
+**Finding 1 — PSI detected early drift that KS missed.**
+At Window 1, KS scored 0.089 — just below the 0.1 detection threshold — and flagged no drift. PSI scored 0.206, well above its 0.1 threshold, and correctly flagged drift. Accuracy had already dropped from 0.820 to 0.805. PSI was right. KS missed it. This suggests KS is less sensitive to early low-level drift than PSI on this dataset.
 
-Graphs
+**Finding 2 — KS cannot distinguish persistent drift from temporary shift.**
+At Window 4, both detectors flagged drift (KS=0.359, PSI=2.445) yet model accuracy fully recovered to baseline 0.820. Neither detector could identify that this shift was transient. This would trigger unnecessary retraining in a production system.
 
-- accuracy_over_time.png: Model accuracy across all five windows
-- ks_drift_over_time.png: Mean KS score over time
-- ks_vs_accuracy_drop.png: KS score vs. accuracy drop (correlation: 0.807)
-- confusion_matrices.png: How prediction errors shift with drift
-- retraining_recovery.png: Accuracy jumps back after retraining
+**Finding 3 — PSI scores were dramatically larger than expected.**
+PSI values of 4.25 and 2.83 at Windows 2 and 3 are approximately 20 times above the "significant shift" threshold of 0.2. This suggests the electricity market distribution changed far more severely than standard PSI thresholds are calibrated for, raising questions about whether industry-standard thresholds generalise across domains.
 
-What’s Missing and What’s Next
+## Graphs
 
-I only used logistic regression and the KS test here. Next up: compare with PSI and MMD, try other models, and see if tracking how long drift lasts (not just how big it is) helps us avoid these false positives.
+- `accuracy_over_time.png` — Model accuracy across all 5 time windows
+- `ks_drift_over_time.png` — Mean KS statistic across time windows
+- `ks_vs_psi_comparison.png` — KS vs PSI scores over time and their correlation
+- `ks_vs_accuracy_drop.png` — Correlation between KS score and accuracy drop (r=0.807)
+- `confusion_matrices.png` — How prediction failure patterns change under drift
+- `retraining_recovery.png` — Accuracy recovery after drift-triggered retraining
+- `per_feature_drift.png` — Which features drifted most
 
-Author
+## Limitations and Next Steps
 
-Mrinank — BS Data Science, IIT Madras (2nd Year)
+This study uses only Logistic Regression and two detection methods. Future work should test across multiple model types, compare KS and PSI against MMD, and examine whether combining drift magnitude with drift persistence duration reduces false alarms in cyclical systems. The question of whether PSI thresholds need domain-specific calibration is a natural next research question.
+
+## Author
+
+Mrinank — BS Data Science, IIT Madras (2nd Year)  
+Independent research alongside coursework.  
+GitHub: https://github.com/MrinankKumar/ml-data-drift-reliability
