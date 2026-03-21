@@ -28,7 +28,18 @@ For each window, two drift detectors were computed against the reference window 
 | 4 | 0.820 | 0.359 | 2.445 | DRIFT | DRIFT | ✓ |
 
 **KS-Accuracy correlation: r = 0.807**
+## Why This Dataset Has Real Drift
 
+The ELEC2 dataset spans May 1996 to December 1998 — a period when Australia 
+was actively reforming and deregulating its electricity market. The National 
+Electricity Market was being established during exactly this period, 
+fundamentally changing how prices were set across New South Wales and Victoria. 
+This was not normal demand fluctuation — it was a structural market 
+transformation affecting price setting mechanisms, interstate transfer patterns, 
+and demand dynamics simultaneously. This historical context explains why drift 
+in this dataset is real and severe, not artificially induced — making it a more 
+credible benchmark for studying drift detection reliability than synthetically 
+perturbed datasets.
 ## Main Findings
 
 **Finding 1 — PSI detected early drift that KS missed.**
