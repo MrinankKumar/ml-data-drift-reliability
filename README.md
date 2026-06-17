@@ -161,6 +161,6 @@ Python, scikit-learn, scipy, pandas, matplotlib. Every notebook runs on its own.
 
 ## Author
 
-Mrinank — BS Data Science, IIT Madras (2nd Year)
+Mrinank — BS Data Science, IIT Madras
 
 Digging into ML reliability and data drift on my own alongside classes. Always open to feedback or collaboration.
