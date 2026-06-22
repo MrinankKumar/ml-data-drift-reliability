@@ -1,4 +1,5 @@
   ## Research Paper Reproduction
+  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
 
 I also conducted a covariate shift experiment, following the methodology described in the paper “A Survey on Dataset Shift in Machine Learning.” This allowed me to verify that my experimental setup actually functions correctly.
 
@@ -164,3 +165,10 @@ Python, scikit-learn, scipy, pandas, matplotlib. Every notebook runs on its own.
 Mrinank — BS Data Science, IIT Madras
 
 Digging into ML reliability and data drift on my own alongside classes. Always open to feedback or collaboration.
+
+## Citation
+If you reference this work, please cite:
+
+Kulhade, Mrinank. (2026). Model Reliability Under Temporal Distribution Shift: 
+An Empirical Study Using the ELEC2 Dataset. Zenodo. 
+https://doi.org/10.5281/zenodo.XXXXXXX
